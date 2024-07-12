@@ -1,4 +1,4 @@
-package com.workshare.exception.type;
+package com.workshare.exceptions;
 
 public class ProjectNotFound extends RuntimeException {
     public ProjectNotFound() {
