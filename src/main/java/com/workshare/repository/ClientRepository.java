@@ -12,4 +12,7 @@ import java.util.Set;
 @Repository
 public interface ClientRepository extends JpaRepository<Client, Long> {
     Optional<Client> findByUsername(String username);
+
+    @Query(value = "SELECT c.username FROM client c", nativeQuery = true)
+    Set<String> findAllUsernames();
 }

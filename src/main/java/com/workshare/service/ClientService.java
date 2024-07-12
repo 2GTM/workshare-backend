@@ -6,6 +6,9 @@ import com.workshare.repository.ClientRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Set;
+
 @Service
 @RequiredArgsConstructor
 public class ClientService {
@@ -15,5 +18,9 @@ public class ClientService {
     public Client getClientByUsername(String username) {
         return clientRepository.findByUsername(username)
                 .orElseThrow(ClientNotFound::new);
+    }
+
+    public Set<String> getAllUsernames() {
+        return clientRepository.findAllUsernames();
     }
 }
