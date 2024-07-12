@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Getter
 @Setter
