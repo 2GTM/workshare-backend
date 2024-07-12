@@ -5,8 +5,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
@@ -24,8 +22,6 @@ public class Project extends WorkShareTable {
     @NotNull
     private String description;
 
-    private int votes;
-
     @ManyToOne
     private Client client;
 
@@ -37,14 +33,24 @@ public class Project extends WorkShareTable {
 
     @ManyToMany
     @JoinTable(
+        name = "rel_project_link",
+        inverseJoinColumns = @JoinColumn(name = "link_id")
+    )
+    private Set<Link> links;
+
+    @ManyToMany
+    @JoinTable(
         name = "rel_project_tag",
         inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
     private Set<Tag> tags;
 
     @OneToMany
-    @JoinColumn(name = "project_id")
-    private Set<Link> links;
+    @JoinTable(
+            name = "rel_project_vote",
+            inverseJoinColumns = @JoinColumn(name = "vote_id")
+    )
+    private Set<Vote> votes;
 
     @Builder.Default
     @Column(nullable = false, columnDefinition = "DATETIME DEFAULT NOW()")

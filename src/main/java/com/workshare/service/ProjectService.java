@@ -1,11 +1,13 @@
 package com.workshare.service;
 
 import com.workshare.dto.ProjectViewDto;
+import com.workshare.dto.VoteProjectDto;
 import com.workshare.exceptions.type.ClientNotFound;
 import com.workshare.exceptions.type.ProjectNotFound;
 import com.workshare.model.Client;
 import com.workshare.model.Link;
 import com.workshare.model.Project;
+import com.workshare.model.Vote;
 import com.workshare.repository.ClientRepository;
 import com.workshare.repository.LinkRepository;
 import com.workshare.repository.ProjectRepository;
@@ -20,8 +22,10 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Validated
 public class ProjectService {
+
     private final ProjectRepository projectRepository;
     private final ClientService clientService;
+    private final ClientRepository clientRepository;
     private final LinkRepository linkRepository;
 
     public Set<ProjectViewDto> getTrendingProjects() {
@@ -30,11 +34,15 @@ public class ProjectService {
                 .map(ProjectViewDto::from)
                 .collect(Collectors.toSet());
     }
-    private final ClientRepository clientRepository;
 
-    public ProjectViewDto getProjectWithId(long projectId) {
-        return ProjectViewDto.from(projectRepository.findById(projectId)
-                .orElseThrow(ProjectNotFound::new));
+
+    public ProjectViewDto getProjectViewWithId(long projectId) {
+        return ProjectViewDto.from(this.getProjectById(projectId));
+    }
+
+    public Project getProjectById(long projectId) {
+        return projectRepository.findById(projectId)
+                .orElseThrow(ProjectNotFound::new);
     }
 
     // Tested. Should work.
@@ -47,6 +55,16 @@ public class ProjectService {
                 .stream()
                 .map(clientService::getClientByUsername)
                 .collect(Collectors.toSet());
+    }
+
+    public void voteProject(VoteProjectDto dto) {
+        Project votedProject = this.getProjectById(dto.projectId());
+        votedProject.getVotes().add(Vote
+                .builder()
+                    .project(this.getProjectById(dto.projectId()))
+                    .client(clientService.getClientByUsername(dto.username()))
+                .build()
+        );
     }
 
     public ProjectViewDto createOrUpdateProject(@Valid ProjectViewDto dto, Long projectId) {
