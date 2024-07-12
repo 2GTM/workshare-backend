@@ -31,11 +31,8 @@ public class Project extends WorkShareTable {
             inverseJoinColumns = @JoinColumn(name = "member_id"))
     private Set<Client> members;
 
-    @ManyToMany
-    @JoinTable(
-        name = "rel_project_link",
-        inverseJoinColumns = @JoinColumn(name = "link_id")
-    )
+    @OneToMany
+    @JoinColumn(name = "project_id")
     private Set<Link> links;
 
     @ManyToMany
