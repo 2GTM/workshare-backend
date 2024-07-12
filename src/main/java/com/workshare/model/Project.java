@@ -37,17 +37,14 @@ public class Project extends WorkShareTable {
 
     @ManyToMany
     @JoinTable(
-        name = "rel_project_link",
-        inverseJoinColumns = @JoinColumn(name = "link_id")
-    )
-    private Set<Link> links = new HashSet<>();
-
-    @ManyToMany
-    @JoinTable(
         name = "rel_project_tag",
         inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
-    private Set<Tag> tags = new HashSet<>();
+    private Set<Tag> tags;
+
+    @OneToMany
+    @JoinColumn(name = "project_id")
+    private Set<Link> links;
 
     @Builder.Default
     @Column(nullable = false, columnDefinition = "DATETIME DEFAULT NOW()")
