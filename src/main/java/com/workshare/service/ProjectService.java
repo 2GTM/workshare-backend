@@ -42,7 +42,7 @@ public class ProjectService {
                 .builder()
                     .title(dto.title())
                     .description(dto.description())
-                    .publisher(clientService.getClientByUsername(dto.nameOfPublisher()))
+                    .client(clientService.getClientByUsername(dto.nameOfPublisher()))
                     .members(this.getAllMembers(dto.membersUsername()))
                 .build()));
 
