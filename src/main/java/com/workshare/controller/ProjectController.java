@@ -30,9 +30,5 @@ public class ProjectController {
         return ResponseEntity.ok(projectService.createProject(dto));
     }
 
-    @PostMapping("/vote")
-    public ResponseEntity<?> voteProject(VoteProjectDto dto) {
-        projectService.voteProject(dto);
-        return ResponseEntity.ok().build();
-    }
+
 }
