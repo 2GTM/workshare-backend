@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.Stack;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -24,8 +25,6 @@ public class Project extends WorkShareTable {
     @NotNull
     private String description;
 
-    private int votes;
-
     @ManyToOne
     private Client client;
 
@@ -40,14 +39,21 @@ public class Project extends WorkShareTable {
         name = "rel_project_link",
         inverseJoinColumns = @JoinColumn(name = "link_id")
     )
-    private Set<Link> links = new HashSet<>();
+    private Set<Link> links;
 
     @ManyToMany
     @JoinTable(
         name = "rel_project_tag",
         inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
-    private Set<Tag> tags = new HashSet<>();
+    private Set<Tag> tags;
+
+    @OneToMany
+    @JoinTable(
+            name = "rel_project_vote",
+            inverseJoinColumns = @JoinColumn(name = "vote_id")
+    )
+    private Set<Vote> votes;
 
     @Builder.Default
     @Column(nullable = false, columnDefinition = "DATETIME DEFAULT NOW()")

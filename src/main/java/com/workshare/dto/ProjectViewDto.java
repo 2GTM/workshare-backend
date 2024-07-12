@@ -19,7 +19,7 @@ public record ProjectViewDto(
         String description,
 
         @Positive
-        int votes,
+        int voteCount,
 
         @NotNull
         String publisherName,
@@ -32,7 +32,7 @@ public record ProjectViewDto(
                 .builder()
                     .title(project.getTitle())
                     .description(project.getDescription())
-                    .votes(project.getVotes())
+                    .voteCount(project.getVotes().size())
                     .publisherName(project.getClient().getUsername())
                 .build();
     }

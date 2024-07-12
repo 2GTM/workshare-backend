@@ -1,10 +1,12 @@
 package com.workshare.service;
 
 import com.workshare.dto.ProjectViewDto;
+import com.workshare.dto.VoteProjectDto;
 import com.workshare.exceptions.type.ClientNotFound;
 import com.workshare.exceptions.type.ProjectNotFound;
 import com.workshare.model.Client;
 import com.workshare.model.Project;
+import com.workshare.model.Vote;
 import com.workshare.repository.ClientRepository;
 import com.workshare.repository.ProjectRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +17,10 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class ProjectService {
+
     private final ProjectRepository projectRepository;
     private final ClientService clientService;
+    private final ClientRepository clientRepository;
 
     public Set<ProjectViewDto> getTrendingProjects() {
         return projectRepository.findTrendingProjects()
@@ -24,11 +28,15 @@ public class ProjectService {
                 .map(ProjectViewDto::from)
                 .collect(Collectors.toSet());
     }
-    private final ClientRepository clientRepository;
 
-    public ProjectViewDto getProjectWithId(long projectId) {
-        return ProjectViewDto.from(projectRepository.findById(projectId)
-                .orElseThrow(ProjectNotFound::new));
+
+    public ProjectViewDto getProjectViewWithId(long projectId) {
+        return ProjectViewDto.from(this.getProjectById(projectId));
+    }
+
+    public Project getProjectById(long projectId) {
+        return projectRepository.findById(projectId)
+                .orElseThrow(ProjectNotFound::new);
     }
 
     // Tested. Should work.
@@ -48,10 +56,19 @@ public class ProjectService {
                 .builder()
                     .title(dto.title())
                     .description(dto.description())
-                    .votes(dto.votes())
                     .client(clientService.getClientByUsername(dto.publisherName()))
                     .members(this.getAllMembersFromUsernames(dto.memberUsernames()))
                 .build()));
+    }
+
+    public void voteProject(VoteProjectDto dto) {
+        Project votedProject = this.getProjectById(dto.projectId());
+        votedProject.getVotes().add(Vote
+                .builder()
+                    .project(this.getProjectById(dto.projectId()))
+                    .client(clientService.getClientByUsername(dto.username()))
+                .build()
+        );
     }
 
     public void createOrUpdateProject(ProjectViewDto dto) {
