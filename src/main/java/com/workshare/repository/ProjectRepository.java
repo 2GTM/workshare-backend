@@ -11,6 +11,6 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     @Query(value = "SELECT c.username from project p, rel_project_member rpm, client c WHERE p.id = ?1 AND p.id = rpm.project_id AND c.id = rpm.member_id", nativeQuery = true)
     Set<String> findMembersUsernamesById(long id);
 
-    @Query(value = "SELECT TOP 10 FROM project ORDER BY votes", nativeQuery = true)
+    @Query(value = "SELECT TOP 10 FROM project ORDER BY vote_count", nativeQuery = true)
     Set<Project> findTrendingProjects();
 }
