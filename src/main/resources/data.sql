@@ -85,14 +85,6 @@ insert into client (id, password, username) values (84, 'tA5.N7_U{X=', 'lskillic
 insert into client (id, password, username) values (85, 'oU2=*q0G(sDwtNW@', 'emacdonagh2c');
 insert into client (id, password, username) values (86, 'wQ3}|BSm', 'sjerdon2d');
 insert into client (id, password, username) values (87, 'jC4|d%`m8O4xFO', 'ralliban2e');
-insert into client (id, password, username) values (88, 'wW1~(z&Q%mz/', 'mtoffano2f');
-insert into client (id, password, username) values (89, 'hD9@)MV}cl&', 'lraycroft2g');
-insert into client (id, password, username) values (90, 'iJ3*j(~,8', 'mroy2h');
-insert into client (id, password, username) values (91, 'tE5&zdt_~nOI4v4g', 'wbew2i');
-insert into client (id, password, username) values (92, 'nL6$''04z<E''n', 'rpidgley2j');
-insert into client (id, password, username) values (93, 'iK0}ER6$&KTKDzj4', 'tsouthern2k');
-insert into client (id, password, username) values (94, 'oV2?alaVi', 'sblomefield2l');
-insert into client (id, password, username) values (95, 'aA2`T$XjKyOlA', 'mcordaroy2m');
 insert into client (id, password, username) values (96, 'iL2@a<d%', 'scogdell2n');
 insert into client (id, password, username) values (97, 'bW7+.qJz', 'kmcmickan2o');
 insert into client (id, password, username) values (98, 'lM7%Rd#}M_td=&', 'gmoiser2p');
@@ -300,6 +292,8 @@ insert into rel_project_member (member_id, project_id) values (87, 26);
 insert into rel_project_member (member_id, project_id) values (13, 63);
 insert into rel_project_member (member_id, project_id) values (94, 12);
 insert into rel_project_member (member_id, project_id) values (66, 3);
+
+inser into rel_project_vote ()
 
 insert into tag (id, content) values (1, 'MBP');
 insert into tag (id, content) values (2, 'OXY');

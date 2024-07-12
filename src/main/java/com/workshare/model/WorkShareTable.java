@@ -19,3 +19,4 @@ public class WorkShareTable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 }
+
