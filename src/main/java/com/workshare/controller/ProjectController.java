@@ -30,6 +30,12 @@ public class ProjectController {
         return ResponseEntity.ok(projectService.createOrUpdateProject(dto, null));
     }
 
+    @PostMapping("/vote")
+    public ResponseEntity<?> voteProject(VoteProjectDto dto) {
+        projectService.voteProject(dto);
+        return ResponseEntity.ok().build();
+    }
+
     @PatchMapping("/{projectId}")
     public ResponseEntity<ProjectViewDto> updateProject(ProjectViewDto dto, @PathVariable long projectId) {
         return ResponseEntity.ok(projectService.createOrUpdateProject(dto, projectId));

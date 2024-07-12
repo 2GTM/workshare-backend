@@ -2,6 +2,7 @@ package com.workshare.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -24,6 +25,8 @@ public class Project extends WorkShareTable {
 
     @ManyToOne
     private Client client;
+
+    private int voteCount;
 
     @ManyToMany
     @JoinTable(

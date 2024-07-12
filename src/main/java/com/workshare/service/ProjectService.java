@@ -24,9 +24,9 @@ import java.util.stream.Collectors;
 public class ProjectService {
 
     private final ProjectRepository projectRepository;
-    private final ClientService clientService;
     private final ClientRepository clientRepository;
     private final LinkRepository linkRepository;
+    private final ClientService clientService;
 
     public Set<ProjectViewDto> getTrendingProjects() {
         return projectRepository.findTrendingProjects()
@@ -34,7 +34,6 @@ public class ProjectService {
                 .map(ProjectViewDto::from)
                 .collect(Collectors.toSet());
     }
-
 
     public ProjectViewDto getProjectViewWithId(long projectId) {
         return ProjectViewDto.from(this.getProjectById(projectId));
@@ -65,6 +64,7 @@ public class ProjectService {
                     .client(clientService.getClientByUsername(dto.username()))
                 .build()
         );
+        votedProject.setVoteCount(votedProject.getVoteCount() + 1);
     }
 
     public ProjectViewDto createOrUpdateProject(@Valid ProjectViewDto dto, Long projectId) {

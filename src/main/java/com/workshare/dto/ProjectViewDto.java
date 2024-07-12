@@ -12,17 +12,17 @@ import java.util.stream.Collectors;
 
 @Builder
 public record ProjectViewDto(
-        @Size(min = 5, max = 30) String title,
+    @Size(min = 5, max = 30) String title,
 
-        @Size(min = 10, max = 50) String description,
+    @Size(min = 10, max = 50) String description,
 
-        @Positive Integer voteCount,
+    @Positive Integer voteCount,
 
-        @NotNull String publisherName,
+    @NotNull String publisherName,
 
-        @NotNull Set<String> membersUsername,
+    @NotNull Set<String> membersUsername,
 
-        @NotNull Set<String> linksContent) {
+    @NotNull Set<String> linksContent) {
     public static ProjectViewDto from(Project project) {
         return new ProjectViewDto(
                 project.getTitle(),
