@@ -27,7 +27,7 @@ public record ProjectViewDto(
                 .builder()
                     .title(project.getTitle())
                     .description(project.getDescription())
-                    .nameOfPublisher(project.getPublisher().getUsername())
+                    .nameOfPublisher(project.getClient().getUsername())
                 .build();
     }
 }
