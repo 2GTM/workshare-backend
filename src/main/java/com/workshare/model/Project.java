@@ -25,7 +25,7 @@ public class Project extends WorkShareTable {
 
     @ManyToOne
     @JoinColumn(name = "client_id")
-    private Client publisher;
+    private Client client;
 
     @ManyToMany
     @JoinTable(
