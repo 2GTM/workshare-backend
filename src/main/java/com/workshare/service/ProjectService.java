@@ -17,6 +17,13 @@ import java.util.stream.Collectors;
 public class ProjectService {
     private final ProjectRepository projectRepository;
     private final ClientService clientService;
+
+    public Set<ProjectViewDto> getTrendingProjects() {
+        return projectRepository.findTrendingProjects()
+                .stream()
+                .map(ProjectViewDto::from)
+                .collect(Collectors.toSet());
+    }
     private final ClientRepository clientRepository;
 
     public ProjectViewDto getProjectWithId(long projectId) {
@@ -41,6 +48,7 @@ public class ProjectService {
                 .builder()
                     .title(dto.title())
                     .description(dto.description())
+                    .votes(dto.votes())
                     .client(clientService.getClientByUsername(dto.publisherName()))
                     .members(this.getAllMembersFromUsernames(dto.memberUsernames()))
                 .build()));
