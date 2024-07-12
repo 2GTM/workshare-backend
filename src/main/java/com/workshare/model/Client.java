@@ -13,7 +13,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Client extends WorkShareTable {
-
     @NotNull
     @Column(unique = true)
     private String username;

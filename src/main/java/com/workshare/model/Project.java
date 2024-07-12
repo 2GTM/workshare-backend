@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -26,7 +27,6 @@ public class Project extends WorkShareTable {
     private int votes;
 
     @ManyToOne
-    @JoinColumn(name = "client_id")
     private Client client;
 
     @ManyToMany
@@ -37,7 +37,7 @@ public class Project extends WorkShareTable {
 
     @ManyToMany
     @JoinTable(
-        name = "rel_project_links",
+        name = "rel_project_link",
         inverseJoinColumns = @JoinColumn(name = "link_id")
     )
     private Set<Link> links = new HashSet<>();
@@ -48,4 +48,8 @@ public class Project extends WorkShareTable {
         inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
     private Set<Tag> tags = new HashSet<>();
+
+    @Builder.Default
+    @Column(nullable = false, columnDefinition = "DATETIME DEFAULT NOW()")
+    private LocalDateTime joinedDate = LocalDateTime.now();
 }
