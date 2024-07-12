@@ -5,22 +5,28 @@ import com.workshare.dto.VoteProjectDto;
 import com.workshare.exceptions.type.ClientNotFound;
 import com.workshare.exceptions.type.ProjectNotFound;
 import com.workshare.model.Client;
+import com.workshare.model.Link;
 import com.workshare.model.Project;
 import com.workshare.model.Vote;
 import com.workshare.repository.ClientRepository;
+import com.workshare.repository.LinkRepository;
 import com.workshare.repository.ProjectRepository;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Validated
 public class ProjectService {
 
     private final ProjectRepository projectRepository;
     private final ClientService clientService;
     private final ClientRepository clientRepository;
+    private final LinkRepository linkRepository;
 
     public Set<ProjectViewDto> getTrendingProjects() {
         return projectRepository.findTrendingProjects()
@@ -51,16 +57,6 @@ public class ProjectService {
                 .collect(Collectors.toSet());
     }
 
-    public ProjectViewDto createProject(ProjectViewDto dto) {
-        return ProjectViewDto.from(projectRepository.save(Project
-                .builder()
-                    .title(dto.title())
-                    .description(dto.description())
-                    .client(clientService.getClientByUsername(dto.publisherName()))
-                    .members(this.getAllMembersFromUsernames(dto.memberUsernames()))
-                .build()));
-    }
-
     public void voteProject(VoteProjectDto dto) {
         Project votedProject = this.getProjectById(dto.projectId());
         votedProject.getVotes().add(Vote
@@ -71,17 +67,25 @@ public class ProjectService {
         );
     }
 
-    public void createOrUpdateProject(ProjectViewDto dto) {
-        boolean isUpdate = dto.id() != null;
-        Project project = isUpdate ? projectRepository.findById(dto.id()).orElseThrow(ProjectNotFound::new) : new Project();
+    public ProjectViewDto createOrUpdateProject(@Valid ProjectViewDto dto, Long projectId) {
+        boolean isUpdate = projectId != null;
+        Project project = isUpdate ? projectRepository.findById(projectId).orElseThrow(ProjectNotFound::new) : new Project();
 
         project.setTitle(dto.title());
         project.setDescription(dto.description());
-        project.setMembers(this.getAllMembersFromUsernames(dto.memberUsernames()));
-        //project.setLinks();
+        project.setMembers(this.getAllMembersFromUsernames(dto.membersUsername()));
+
+        System.out.println(dto.linksContent());
+        project.setLinks(
+            dto.linksContent().stream()
+                .map(e -> linkRepository.save(Link.builder().content(e).build()))
+                .collect(Collectors.toSet())
+        );
 
         if(!isUpdate) {
             project.setClient(clientRepository.findByUsername(dto.publisherName()).orElseThrow(ClientNotFound::new));
         }
+
+        return ProjectViewDto.from(projectRepository.save(project));
     }
 }

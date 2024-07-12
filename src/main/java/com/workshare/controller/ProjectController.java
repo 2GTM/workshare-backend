@@ -6,9 +6,9 @@ import com.workshare.service.ProjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.Set;
 
+@CrossOrigin("${ALLOWED_URL}")
 @RestController
 @RequestMapping("/api/projects")
 @RequiredArgsConstructor
@@ -25,9 +25,14 @@ public class ProjectController {
         return ResponseEntity.ok(projectService.getProjectViewWithId(projectId));
     }
 
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity<ProjectViewDto> createProject(ProjectViewDto dto) {
-        return ResponseEntity.ok(projectService.createProject(dto));
+        return ResponseEntity.ok(projectService.createOrUpdateProject(dto, null));
+    }
+
+    @PatchMapping("/{projectId}")
+    public ResponseEntity<ProjectViewDto> updateProject(ProjectViewDto dto, @PathVariable long projectId) {
+        return ResponseEntity.ok(projectService.createOrUpdateProject(dto, projectId));
     }
 
 
