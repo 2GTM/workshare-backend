@@ -12,6 +12,7 @@ import com.workshare.repository.LinkRepository;
 import com.workshare.repository.ProjectRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import java.util.Set;
@@ -89,7 +90,11 @@ public class ProjectService {
     }
 
     // For know, find all.
-    public Set<ProjectViewDto> searchProjects() {
-        return projectRepository.findAll().stream().map(ProjectViewDto::from).collect(Collectors.toSet());
+    public Set<ProjectViewDto> searchProjects(String content) {
+        if(content.isEmpty()) {
+            return projectRepository.getAll(Sort.by(Sort.Direction.DESC, "creationDate"));
+        } else {
+            return projectRepository.searchProjects(content, Sort.by(Sort.Direction.DESC, "creationDate"));
+        }
     }
 }

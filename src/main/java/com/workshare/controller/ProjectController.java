@@ -17,8 +17,8 @@ public class ProjectController {
     private final ProjectService projectService;
 
     @GetMapping("/search")
-    public ResponseEntity<Set<ProjectViewDto>> search() {
-        return ResponseEntity.ok(projectService.searchProjects());
+    public ResponseEntity<Set<ProjectViewDto>> search(@RequestParam(required = false, defaultValue = "") String content) {
+        return ResponseEntity.ok(projectService.searchProjects(content));
     }
 
     @GetMapping("/trend")

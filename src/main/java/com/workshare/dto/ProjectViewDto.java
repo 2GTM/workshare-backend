@@ -27,8 +27,8 @@ public record ProjectViewDto(
     @NotNull Set<LinkDto> linksContent,
     @NotNull Set<String> tagsContent
     ) {
-    public static ProjectViewDto from(Project project) {
-        return new ProjectViewDto(
+    public ProjectViewDto(Project project) {
+        this(
             project.getId(),
             project.getTitle(),
             project.getDescription(),
@@ -38,5 +38,8 @@ public record ProjectViewDto(
             project.getLinks().stream().map(LinkDto::from).collect(Collectors.toSet()),
             project.getTags().stream().map(Tag::getContent).collect(Collectors.toSet())
         );
+    }
+    public static ProjectViewDto from(Project project) {
+        return new ProjectViewDto(project);
     }
 }

@@ -1,6 +1,8 @@
 package com.workshare.repository;
 
+import com.workshare.dto.ProjectViewDto;
 import com.workshare.model.Project;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -13,4 +15,10 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
 
     @Query(value = "SELECT * FROM project ORDER BY vote_count DESC LIMIT 5", nativeQuery = true)
     Set<Project> findTrendingProjects();
+
+    @Query("SELECT new com.workshare.dto.ProjectViewDto(p) FROM Project p WHERE p.title LIKE %?1% OR p.description LIKE %?1%")
+    Set<ProjectViewDto> searchProjects(String content, Sort sort);
+
+    @Query("SELECT new com.workshare.dto.ProjectViewDto(p) FROM Project p")
+    Set<ProjectViewDto> getAll(Sort sort);
 }
