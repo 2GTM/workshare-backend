@@ -1,7 +1,6 @@
 package com.workshare.service;
 
 import com.workshare.dto.ProjectViewDto;
-import com.workshare.dto.VoteProjectDto;
 import com.workshare.exceptions.type.ClientNotFound;
 import com.workshare.exceptions.type.ProjectNotFound;
 import com.workshare.model.Client;
@@ -57,8 +56,14 @@ public class ProjectService {
                 .collect(Collectors.toSet());
     }
 
+    public Project addMemberToProject(long projectId, String clientName) {
+        Project project = this.getProjectById(projectId);
+        project.getMembers().add(clientService.getClientByUsername(clientName));
+        return this.projectRepository.save(project);
+    }
+
     // DO AT THE END
-    public Project voteProject(VoteProjectDto dto) {
+    public Project voteProject(String clientName, long projectId) {
         return null;
     }
 

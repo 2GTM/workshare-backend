@@ -1,7 +1,6 @@
 package com.workshare.controller;
 
 import com.workshare.dto.ProjectViewDto;
-import com.workshare.dto.VoteProjectDto;
 import com.workshare.model.Project;
 import com.workshare.service.ProjectService;
 import lombok.RequiredArgsConstructor;
@@ -39,10 +38,15 @@ public class ProjectController {
         return ResponseEntity.ok(projectService.createOrUpdateProject(dto, null));
     }
 
+    @PostMapping("/{projectId}/addMember")
+    public ResponseEntity<Project> addMemberToProject(@PathVariable long projectId, @RequestParam String clientName) {
+        return ResponseEntity.ok(projectService.addMemberToProject(projectId, clientName));
+    }
+
     // NOT WORKING YET - DO AT THE END
-    @PostMapping("/vote")
-    public ResponseEntity<Project> voteProject(VoteProjectDto dto) {
-        return ResponseEntity.ok(projectService.voteProject(dto));
+    @PostMapping("/{projectId}/vote")
+    public ResponseEntity<Project> voteProject(@PathVariable long projectId, @RequestParam String clientName) {
+        return ResponseEntity.ok(projectService.voteProject(clientName,projectId));
     }
 
     @PatchMapping("/{projectId}")
