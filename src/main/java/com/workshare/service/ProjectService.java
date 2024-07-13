@@ -22,7 +22,6 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class ProjectService {
-
     private final ProjectRepository projectRepository;
     private final ClientRepository clientRepository;
     private final LinkRepository linkRepository;
@@ -86,5 +85,10 @@ public class ProjectService {
         }
 
         return ProjectViewDto.from(projectRepository.save(project));
+    }
+
+    // For know, find all.
+    public Set<ProjectViewDto> searchProjects() {
+        return projectRepository.findAll().stream().map(ProjectViewDto::from).collect(Collectors.toSet());
     }
 }

@@ -17,6 +17,11 @@ import java.util.Set;
 public class ProjectController {
     private final ProjectService projectService;
 
+    @GetMapping("/search")
+    public ResponseEntity<Set<ProjectViewDto>> search() {
+        return ResponseEntity.ok(projectService.searchProjects());
+    }
+
     @GetMapping("/trend")
     public ResponseEntity<Set<ProjectViewDto>> getTrends() {
         return ResponseEntity.ok(projectService.getTrendingProjects());
