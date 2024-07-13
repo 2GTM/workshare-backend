@@ -2,6 +2,7 @@ package com.workshare.dto;
 
 import com.workshare.model.Client;
 import com.workshare.model.Project;
+import com.workshare.model.Tag;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
@@ -23,7 +24,9 @@ public record ProjectViewDto(
 
     @NotNull Set<String> membersUsername,
 
-    @NotNull Set<LinkDto> linksContent) {
+    @NotNull Set<LinkDto> linksContent,
+    @NotNull Set<String> tags
+    ) {
     public static ProjectViewDto from(Project project) {
         return new ProjectViewDto(
             project.getId(),
@@ -32,6 +35,8 @@ public record ProjectViewDto(
             project.getVoteCount(),
             project.getClient().getUsername(),
             project.getMembers().stream().map(Client::getUsername).collect(Collectors.toSet()),
-            project.getLinks().stream().map(LinkDto::from).collect(Collectors.toSet()));
+            project.getLinks().stream().map(LinkDto::from).collect(Collectors.toSet()),
+            project.getTags().stream().map(Tag::getContent).collect(Collectors.toSet())
+        );
     }
 }

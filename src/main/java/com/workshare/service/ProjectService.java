@@ -7,7 +7,6 @@ import com.workshare.exceptions.type.ProjectNotFound;
 import com.workshare.model.Client;
 import com.workshare.model.Link;
 import com.workshare.model.Project;
-import com.workshare.model.Vote;
 import com.workshare.repository.ClientRepository;
 import com.workshare.repository.LinkRepository;
 import com.workshare.repository.ProjectRepository;
@@ -26,6 +25,7 @@ public class ProjectService {
     private final ClientRepository clientRepository;
     private final LinkRepository linkRepository;
     private final ClientService clientService;
+    private final TagService tagService;
 
     public Set<ProjectViewDto> getTrendingProjects() {
         return projectRepository.findTrendingProjects()
@@ -67,6 +67,7 @@ public class ProjectService {
         project.setTitle(dto.title());
         project.setDescription(dto.description());
         project.setMembers(this.getAllMembersFromUsernames(dto.membersUsername()));
+        project.setTags(tagService.getTagsFromListOfStrings(dto.tags()));
 
         project.setLinks(
             dto.linksContent().stream()

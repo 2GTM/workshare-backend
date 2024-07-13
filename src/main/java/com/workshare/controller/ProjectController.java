@@ -4,7 +4,6 @@ import com.workshare.dto.ProjectViewDto;
 import com.workshare.dto.VoteProjectDto;
 import com.workshare.model.Project;
 import com.workshare.service.ProjectService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
