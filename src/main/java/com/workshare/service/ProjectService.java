@@ -67,7 +67,7 @@ public class ProjectService {
         project.setTitle(dto.title());
         project.setDescription(dto.description());
         project.setMembers(this.getAllMembersFromUsernames(dto.membersUsername()));
-        project.setTags(tagService.getTagsFromListOfStrings(dto.tags()));
+        project.setTags(tagService.getTagsFromListOfStrings(dto.tagsContent()));
 
         project.setLinks(
             dto.linksContent().stream()

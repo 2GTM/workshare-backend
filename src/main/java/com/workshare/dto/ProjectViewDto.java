@@ -25,7 +25,7 @@ public record ProjectViewDto(
     @NotNull Set<String> membersUsername,
 
     @NotNull Set<LinkDto> linksContent,
-    @NotNull Set<String> tags
+    @NotNull Set<String> tagsContent
     ) {
     public static ProjectViewDto from(Project project) {
         return new ProjectViewDto(
