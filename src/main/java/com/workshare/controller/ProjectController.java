@@ -2,6 +2,7 @@ package com.workshare.controller;
 
 import com.workshare.dto.ProjectViewDto;
 import com.workshare.dto.VoteProjectDto;
+import com.workshare.model.Project;
 import com.workshare.service.ProjectService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -31,10 +32,10 @@ public class ProjectController {
         return ResponseEntity.ok(projectService.createOrUpdateProject(dto, null));
     }
 
+    // NOT WORKING YET - DO AT THE END
     @PostMapping("/vote")
-    public ResponseEntity<?> voteProject(VoteProjectDto dto) {
-        projectService.voteProject(dto);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Project> voteProject(VoteProjectDto dto) {
+        return ResponseEntity.ok(projectService.voteProject(dto));
     }
 
     @PatchMapping("/{projectId}")

@@ -2,9 +2,9 @@ package com.workshare.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 import lombok.*;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -17,7 +17,6 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Project extends WorkShareTable {
-
     @NotNull
     private String title;
 
@@ -25,6 +24,7 @@ public class Project extends WorkShareTable {
     private String description;
 
     @ManyToOne
+    @JoinColumn(name = "client_id")
     private Client client;
 
     private int voteCount;

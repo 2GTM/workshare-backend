@@ -29,7 +29,7 @@ public record ProjectViewDto(
             project.getId(),
             project.getTitle(),
             project.getDescription(),
-            project.getVotes().size(),
+            project.getVoteCount(),
             project.getClient().getUsername(),
             project.getMembers().stream().map(Client::getUsername).collect(Collectors.toSet()),
             project.getLinks().stream().map(LinkDto::from).collect(Collectors.toSet()));
