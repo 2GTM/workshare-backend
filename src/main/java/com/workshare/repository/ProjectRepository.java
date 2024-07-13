@@ -16,7 +16,7 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     @Query(value = "SELECT * FROM project ORDER BY vote_count DESC LIMIT 5", nativeQuery = true)
     Set<Project> findTrendingProjects();
 
-    @Query("SELECT new com.workshare.dto.ProjectViewDto(p) FROM Project p WHERE p.title LIKE %?1% OR p.description LIKE %?1%")
+    @Query("SELECT new com.workshare.dto.ProjectViewDto(p) FROM Project p WHERE LOWER(p.title) LIKE %?1% OR LOWER(p.description) LIKE %?1%")
     Set<ProjectViewDto> searchProjects(String content, Sort sort);
 
     @Query("SELECT new com.workshare.dto.ProjectViewDto(p) FROM Project p")

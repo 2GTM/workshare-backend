@@ -93,11 +93,17 @@ public class ProjectService {
     }
 
     // For know, find all.
-    public Set<ProjectViewDto> searchProjects(String content) {
-        if(content.isEmpty()) {
-            return projectRepository.getAll(Sort.by(Sort.Direction.DESC, "creationDate"));
-        } else {
-            return projectRepository.searchProjects(content, Sort.by(Sort.Direction.DESC, "creationDate"));
+    public Set<ProjectViewDto> searchProjects(String content, Set<String> tags) {
+        Set<ProjectViewDto> projects = content.isEmpty() ?
+            projectRepository.getAll(Sort.by(Sort.Direction.DESC, "creationDate")):
+            projectRepository.searchProjects(content.toLowerCase(), Sort.by(Sort.Direction.DESC, "creationDate"))
+        ;
+
+        if(!tags.isEmpty()) {
+            // if the project does not contain all tags, we removed it.
+            projects.removeIf(project -> !project.tagsContent().containsAll(tags));
         }
+
+        return projects;
     }
 }
