@@ -6,6 +6,7 @@ import com.workshare.exceptions.type.ProjectNotFound;
 import com.workshare.model.Client;
 import com.workshare.model.Link;
 import com.workshare.model.Project;
+import com.workshare.model.Vote;
 import com.workshare.repository.ClientRepository;
 import com.workshare.repository.LinkRepository;
 import com.workshare.repository.ProjectRepository;
@@ -44,7 +45,6 @@ public class ProjectService {
                 .orElseThrow(ProjectNotFound::new);
     }
 
-    // Tested. Should work.
     public Set<String> getAllMembersUsernamesFromProjectId(long projectId) {
         return projectRepository.findMembersUsernamesById(projectId);
     }
@@ -56,15 +56,16 @@ public class ProjectService {
                 .collect(Collectors.toSet());
     }
 
-    public Project addMemberToProject(long projectId, String clientName) {
+    public ProjectViewDto addMemberToProject(long projectId, String clientName) {
         Project project = this.getProjectById(projectId);
         project.getMembers().add(clientService.getClientByUsername(clientName));
-        return this.projectRepository.save(project);
+        return ProjectViewDto.from(this.projectRepository.save(project));
     }
 
-    // DO AT THE END
-    public Project voteProject(String clientName, long projectId) {
-        return null;
+    public ProjectViewDto voteProject(long projectId, String clientName) {
+        Project project = this.getProjectById(projectId);
+        project.getVotes().add(Vote.builder().client(clientService.getClientByUsername(clientName)).project(project).build());
+        return ProjectViewDto.from(this.projectRepository.save(project));
     }
 
     public ProjectViewDto createOrUpdateProject(@Valid ProjectViewDto dto, Long projectId) {

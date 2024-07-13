@@ -39,14 +39,14 @@ public class ProjectController {
     }
 
     @PostMapping("/{projectId}/addMember")
-    public ResponseEntity<Project> addMemberToProject(@PathVariable long projectId, @RequestParam String clientName) {
+    public ResponseEntity<ProjectViewDto> addMemberToProject(@PathVariable long projectId, @RequestParam String clientName) {
         return ResponseEntity.ok(projectService.addMemberToProject(projectId, clientName));
     }
 
     // NOT WORKING YET - DO AT THE END
     @PostMapping("/{projectId}/vote")
-    public ResponseEntity<Project> voteProject(@PathVariable long projectId, @RequestParam String clientName) {
-        return ResponseEntity.ok(projectService.voteProject(clientName,projectId));
+    public ResponseEntity<ProjectViewDto> voteProject(@PathVariable long projectId, @RequestParam String clientName) {
+        return ResponseEntity.ok(projectService.voteProject(projectId,clientName));
     }
 
     @PatchMapping("/{projectId}")

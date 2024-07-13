@@ -27,8 +27,6 @@ public class Project extends WorkShareTable {
     @JoinColumn(name = "client_id")
     private Client client;
 
-    private int voteCount;
-
     @ManyToMany
     @JoinTable(
             name = "rel_project_member",
@@ -39,6 +37,8 @@ public class Project extends WorkShareTable {
     @JoinColumn(name = "project_id")
     private Set<Link> links;
 
+    private int voteCount;
+
     @ManyToMany
     @JoinTable(
         name = "rel_project_tag",
@@ -46,13 +46,8 @@ public class Project extends WorkShareTable {
     )
     private Set<Tag> tags;
 
-    @Builder.Default
-    @OneToMany
-    @JoinTable(
-            name = "rel_project_vote",
-            inverseJoinColumns = @JoinColumn(name = "vote_id")
-    )
-    private Set<Vote> votes = new HashSet<>();
+    @OneToMany(mappedBy = "project")
+    private Set<Vote> votes;
 
     @Builder.Default
     @Column(nullable = false, columnDefinition = "DATETIME DEFAULT NOW()")

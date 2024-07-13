@@ -1,6 +1,7 @@
 package com.workshare.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import lombok.*;
 
@@ -16,6 +17,6 @@ public class Vote extends WorkShareTable {
     @OneToOne
     private Client client;
 
-    @OneToOne
+    @ManyToOne
     private Project project;
 }
