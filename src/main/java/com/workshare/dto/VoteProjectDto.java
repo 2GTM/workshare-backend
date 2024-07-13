@@ -1,13 +1,10 @@
 package com.workshare.dto;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Positive;
+import com.workshare.model.Client;
+import com.workshare.model.Project;
 
 public record VoteProjectDto(
 
-        @Positive
-        long projectId,
-
-        @NotBlank
-        String username
+        Project project,
+        Client client
 ) { }
