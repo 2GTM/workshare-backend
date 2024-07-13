@@ -69,7 +69,6 @@ public class ProjectService {
         project.setDescription(dto.description());
         project.setMembers(this.getAllMembersFromUsernames(dto.membersUsername()));
 
-        System.out.println(dto.linksContent());
         project.setLinks(
             dto.linksContent().stream()
                 .map(e -> linkRepository.save(

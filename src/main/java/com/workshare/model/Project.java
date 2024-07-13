@@ -56,5 +56,5 @@ public class Project extends WorkShareTable {
 
     @Builder.Default
     @Column(nullable = false, columnDefinition = "DATETIME DEFAULT NOW()")
-    private LocalDateTime joinedDate = LocalDateTime.now();
+    private LocalDateTime creationDate = LocalDateTime.now();
 }
