@@ -12,24 +12,28 @@ import java.util.stream.Collectors;
 
 @Builder
 public record ProjectViewDto(
-    @Size(min = 5, max = 30) String title,
 
-    @Size(min = 10, max = 50) String description,
+        @Positive long id,
 
-    @Positive Integer voteCount,
+        @Size(min = 5, max = 30) String title,
 
-    @NotNull String publisherName,
+        @Size(min = 10, max = 50) String description,
 
-    @NotNull Set<String> membersUsername,
+        @Positive Integer voteCount,
 
-    @NotNull Set<String> linksContent) {
-    public static ProjectViewDto from(Project project) {
-        return new ProjectViewDto(
-                project.getTitle(),
-                project.getDescription(),
-                project.getVotes().size(),
-                project.getClient().getUsername(),
-                project.getMembers().stream().map(Client::getUsername).collect(Collectors.toSet()),
-                project.getLinks().stream().map(Link::getContent).collect(Collectors.toSet()));
-    }
+        @NotNull String publisherName,
+
+        @NotNull Set<String> membersUsername,
+
+        @NotNull Set<String> linksContent) {
+        public static ProjectViewDto from(Project project) {
+            return new ProjectViewDto(
+                    project.getId(),
+                    project.getTitle(),
+                    project.getDescription(),
+                    project.getVotes().size(),
+                    project.getClient().getUsername(),
+                    project.getMembers().stream().map(Client::getUsername).collect(Collectors.toSet()),
+                    project.getLinks().stream().map(Link::getContent).collect(Collectors.toSet()));
+        }
 }
