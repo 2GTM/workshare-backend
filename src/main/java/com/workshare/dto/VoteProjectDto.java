@@ -5,6 +5,6 @@ import com.workshare.model.Project;
 
 public record VoteProjectDto(
 
-        Project project,
-        Client client
+        long projectId,
+        long clientId
 ) { }
