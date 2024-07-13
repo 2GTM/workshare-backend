@@ -56,15 +56,9 @@ public class ProjectService {
                 .collect(Collectors.toSet());
     }
 
-    public void voteProject(VoteProjectDto dto) {
-        Project votedProject = this.getProjectById(dto.projectId());
-        votedProject.getVotes().add(Vote
-                .builder()
-                    .project(this.getProjectById(dto.projectId()))
-                    .client(clientService.getClientByUsername(dto.username()))
-                .build()
-        );
-        votedProject.setVoteCount(votedProject.getVoteCount() + 1);
+    // DO AT THE END
+    public Project voteProject(VoteProjectDto dto) {
+        return null;
     }
 
     public ProjectViewDto createOrUpdateProject(@Valid ProjectViewDto dto, Long projectId) {

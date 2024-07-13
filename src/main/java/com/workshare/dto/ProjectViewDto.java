@@ -25,13 +25,14 @@ public record ProjectViewDto(
 
         @NotNull Set<String> membersUsername,
 
-        @NotNull Set<String> linksContent) {
+        @NotNull Set<String> linksContent
+) {
         public static ProjectViewDto from(Project project) {
             return new ProjectViewDto(
                     project.getId(),
                     project.getTitle(),
                     project.getDescription(),
-                    project.getVotes().size(),
+                    project.getVoteCount(),
                     project.getClient().getUsername(),
                     project.getMembers().stream().map(Client::getUsername).collect(Collectors.toSet()),
                     project.getLinks().stream().map(Link::getContent).collect(Collectors.toSet()));
