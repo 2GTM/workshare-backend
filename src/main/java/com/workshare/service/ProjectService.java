@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
+import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -82,7 +83,9 @@ public class ProjectService {
                 .collect(Collectors.toSet())
         );
 
-        if(!isUpdate) {
+        if(isUpdate) {
+            project.setLastModifiedDate(LocalDateTime.now());
+        } else {
             project.setClient(clientRepository.findByUsername(dto.publisherName()).orElseThrow(ClientNotFound::new));
         }
 

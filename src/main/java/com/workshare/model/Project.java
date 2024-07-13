@@ -57,4 +57,8 @@ public class Project extends WorkShareTable {
     @Builder.Default
     @Column(nullable = false, columnDefinition = "DATETIME DEFAULT NOW()")
     private LocalDateTime creationDate = LocalDateTime.now();
+
+    @Builder.Default
+    @Column(nullable = false, columnDefinition = "DATETIME DEFAULT NOW()")
+    private LocalDateTime lastModifiedDate = LocalDateTime.now();
 }
