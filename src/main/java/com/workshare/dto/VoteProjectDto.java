@@ -5,9 +5,10 @@ import jakarta.validation.constraints.Positive;
 
 public record VoteProjectDto(
 
-        @Positive
-        long projectId,
+    @Positive
+    long projectId,
 
-        @NotBlank
-        String username
-) { }
+    @NotBlank
+    String username
+) {
+}

@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Positive;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
@@ -45,12 +46,13 @@ public class Project extends WorkShareTable {
     )
     private Set<Tag> tags;
 
+    @Builder.Default
     @OneToMany
     @JoinTable(
             name = "rel_project_vote",
             inverseJoinColumns = @JoinColumn(name = "vote_id")
     )
-    private Set<Vote> votes;
+    private Set<Vote> votes = new HashSet<>();
 
     @Builder.Default
     @Column(nullable = false, columnDefinition = "DATETIME DEFAULT NOW()")

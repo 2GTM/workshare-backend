@@ -3,6 +3,7 @@ package com.workshare.controller;
 import com.workshare.dto.ProjectViewDto;
 import com.workshare.dto.VoteProjectDto;
 import com.workshare.service.ProjectService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,7 @@ public class ProjectController {
     }
 
     @PostMapping
-    public ResponseEntity<ProjectViewDto> createProject(ProjectViewDto dto) {
+    public ResponseEntity<ProjectViewDto> createProject(@RequestBody ProjectViewDto dto) {
         return ResponseEntity.ok(projectService.createOrUpdateProject(dto, null));
     }
 
@@ -37,9 +38,7 @@ public class ProjectController {
     }
 
     @PatchMapping("/{projectId}")
-    public ResponseEntity<ProjectViewDto> updateProject(ProjectViewDto dto, @PathVariable long projectId) {
+    public ResponseEntity<ProjectViewDto> updateProject(@RequestBody ProjectViewDto dto, @PathVariable long projectId) {
         return ResponseEntity.ok(projectService.createOrUpdateProject(dto, projectId));
     }
-
-
 }

@@ -18,9 +18,9 @@ import org.springframework.validation.annotation.Validated;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Validated
 @Service
 @RequiredArgsConstructor
-@Validated
 public class ProjectService {
 
     private final ProjectRepository projectRepository;
@@ -78,7 +78,13 @@ public class ProjectService {
         System.out.println(dto.linksContent());
         project.setLinks(
             dto.linksContent().stream()
-                .map(e -> linkRepository.save(Link.builder().content(e).build()))
+                .map(e -> linkRepository.save(
+                    Link.builder()
+                        .content(e.content())
+                        .visibility(e.visibility())
+                        .build()
+                    )
+                )
                 .collect(Collectors.toSet())
         );
 
