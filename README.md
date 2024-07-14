@@ -9,11 +9,7 @@ This project was built during the Hack your portfolio hackathon my MLH
 - [@QuocDungTran380](https://github.com/QuocDungTran380)
 
 
-## Tech Stack
+## Made with
 
-**Client:** 
-React, Nextjs, Axios, Typescript, Bunjs, MUI
-
-**Server:** 
 SpringBoot, Java, Maven, Mariadb
 
