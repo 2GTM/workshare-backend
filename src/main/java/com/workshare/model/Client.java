@@ -20,4 +20,9 @@ public class Client extends WorkShareTable {
 
     @NotNull
     private String password;
+
+    private String bio;
+
+    private String github;
+
 }

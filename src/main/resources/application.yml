@@ -1,12 +1,12 @@
 server:
-  port: ${PORT}
+  port: 9108
 spring:
   application:
     name: workshare
   datasource:
-    url: ${URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    url: jdbc:mariadb://localhost:3306/workshare
+    username: root
+    password: 595978
   jpa:
     hibernate:
       ddl-auto: create-drop

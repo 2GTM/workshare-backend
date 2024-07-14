@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.Set;
 
-@CrossOrigin("${ALLOWED_URL}")
+@CrossOrigin("http://localhost")
 @RestController
 @RequestMapping("/api/projects")
 @RequiredArgsConstructor
