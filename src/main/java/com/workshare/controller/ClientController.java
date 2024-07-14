@@ -1,8 +1,11 @@
 package com.workshare.controller;
 
+import com.workshare.dto.ClientDto;
 import com.workshare.model.Client;
 import com.workshare.service.ClientService;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.http.codec.ClientCodecConfigurer.ClientDefaultCodecs;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,7 +27,7 @@ public class ClientController {
     }
 
     @GetMapping("/{username}")
-    public Client getUserInfo(@PathVariable String username) {
-        return clientService.getClientByUsername(username);
+    public ClientDto getUserInfo(@PathVariable String username) {
+        return new ClientDto(clientService.getClientByUsername(username), clientService.getProjectsNumber(username));
     }
 }

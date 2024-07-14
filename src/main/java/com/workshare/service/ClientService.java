@@ -6,7 +6,6 @@ import com.workshare.repository.ClientRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Set;
 
 @Service
@@ -25,5 +24,9 @@ public class ClientService {
 
     public Set<String> getAllUsernames() {
         return clientRepository.findAllUsernames();
+    }
+
+    public int getProjectsNumber(String username) {
+        return clientRepository.findProjectsNumber(username);
     }
 }
