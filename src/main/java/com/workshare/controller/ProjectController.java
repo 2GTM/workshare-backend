@@ -1,5 +1,6 @@
 package com.workshare.controller;
 
+import com.workshare.dto.ProjectActionDto;
 import com.workshare.dto.ProjectViewDto;
 import com.workshare.model.Project;
 import com.workshare.service.ProjectService;
@@ -37,9 +38,14 @@ public class ProjectController {
         return ResponseEntity.ok(projectService.createOrUpdateProject(dto, null));
     }
 
-    @PostMapping("/{projectId}/addMember")
-    public ResponseEntity<ProjectViewDto> addMemberToProject(@PathVariable long projectId, @RequestParam String clientName) {
-        return ResponseEntity.ok(projectService.addMemberToProject(projectId, clientName));
+    @PostMapping("/{projectId}/add-member")
+    public ResponseEntity<ProjectViewDto> addMemberToProject(@PathVariable long projectId, ProjectActionDto dto) {
+        return ResponseEntity.ok(projectService.addRemoveMemberToProject(projectId, dto.clientName(), dto.removing()));
+    }
+
+    @PostMapping("/{projectId}/remove-member")
+    public ResponseEntity<ProjectViewDto> removeMemberToProject(@PathVariable long projectId, ProjectActionDto dto) {
+        return ResponseEntity.ok(projectService.addRemoveMemberToProject(projectId, dto.clientName(), dto.removing()));
     }
 
     // NOT WORKING YET - DO AT THE END
