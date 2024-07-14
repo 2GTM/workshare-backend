@@ -1,20 +1,16 @@
-package com.workshare.auth;
+package com.workshare.controller;
 
 import com.workshare.service.AuthentiticationService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin("${ALLOWED_URL}")
 @RestController
 @RequestMapping("/api/auth")
+@RequiredArgsConstructor
 public class AuthenticationController {
     private final AuthentiticationService authentiticationService;
-
-    public AuthenticationController(AuthentiticationService authentiticationService) {
-        this.authentiticationService = authentiticationService;
-    }
 
     @PostMapping("/sign-up")
     public ResponseEntity<String> signUp(
@@ -27,5 +23,10 @@ public class AuthenticationController {
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestParam String username, @RequestParam String password) {
         return ResponseEntity.ok(authentiticationService.login(username, password));
+    }
+
+    @PostMapping("/testing")
+    public String test() {
+        return "fdasafdsfdas";
     }
 }
