@@ -5,13 +5,14 @@ import com.workshare.service.ClientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.Set;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
-@CrossOrigin("http://localhost")
+@CrossOrigin("${ALLOWED_URL}")
 @RestController
 @RequestMapping("/api/clients")
 @RequiredArgsConstructor
@@ -23,9 +24,8 @@ public class ClientController {
         return clientService.getAllUsernames();
     }
 
-    @GetMapping("/profile")
-    public Client getUserInfo(@RequestParam String username) {
+    @GetMapping("/{username}")
+    public Client getUserInfo(@PathVariable String username) {
         return clientService.getClientByUsername(username);
     }
-    
 }

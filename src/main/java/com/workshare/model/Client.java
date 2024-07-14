@@ -28,6 +28,10 @@ public class Client extends WorkShareTable implements UserDetails {
     @NotNull
     private String password;
 
+    private String bio;
+
+    private String github;
+
     @Enumerated(EnumType.STRING)
     private ClientRole role;
 

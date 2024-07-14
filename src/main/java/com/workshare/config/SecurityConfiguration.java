@@ -16,10 +16,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfiguration {
     private final String[] WHITE_LIST_URL = {
-        "/api/auth/**",
-        "/api/projects/search",
-        "/api/projects/trend",
-        "/api/clients/**"
+        "/api/**"
     };
 
     private final JwtAuthentiticationFilter jwtAuthentiticationFilter;
@@ -31,7 +28,6 @@ public class SecurityConfiguration {
             .authorizeHttpRequests(
                 authCustomizer -> authCustomizer
                     .requestMatchers(WHITE_LIST_URL).permitAll()
-                    .requestMatchers(HttpMethod.GET, "/api/projects/{projectId}").permitAll()
 
             )
             .authenticationProvider(authenticationProvider)
