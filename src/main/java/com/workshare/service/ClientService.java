@@ -19,7 +19,7 @@ public class ClientService {
 
     public Client getClientByUsername(String username) {
         return clientRepository.findByUsername(username)
-                .orElseThrow(ClientNotFound::new);
+                .orElse(null);
     }
 
     public Set<String> getAllUsernames() {
