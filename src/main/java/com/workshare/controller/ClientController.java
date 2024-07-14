@@ -7,9 +7,6 @@ import com.workshare.service.ClientService;
 import com.workshare.service.ProjectService;
 
 import lombok.RequiredArgsConstructor;
-
-import org.springframework.http.codec.ClientCodecConfigurer.ClientDefaultCodecs;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
