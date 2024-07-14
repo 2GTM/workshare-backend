@@ -1,4 +1,4 @@
-package com.workshare.exception.type;
+package com.workshare.exceptions.type;
 
 public class ClientNotFound extends RuntimeException {
     public ClientNotFound() {
