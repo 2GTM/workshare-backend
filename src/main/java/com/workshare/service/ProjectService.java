@@ -56,7 +56,6 @@ public class ProjectService {
                 .collect(Collectors.toSet());
     }
 
-
     public ProjectViewDto addRemoveMemberToProject(long projectId, String clientName, boolean removing) {
         Project project = this.getProjectById(projectId);
         Client client = clientService.getClientByUsername(clientName);
@@ -84,15 +83,15 @@ public class ProjectService {
         project.setTags(tagService.getTagsFromListOfStrings(dto.tagsContent()));
 
         project.setLinks(
-            dto.linksContent().stream()
-                .map(e -> linkRepository.save(
-                    Link.builder()
-                        .content(e.content())
-                        .visibility(e.visibility())
-                        .build()
-                    )
-                )
-                .collect(Collectors.toSet())
+                dto.linksContent().stream()
+                        .map(e -> linkRepository.save(
+                                        Link.builder()
+                                                .content(e.content())
+                                                .visibility(e.visibility())
+                                                .build()
+                                )
+                        )
+                        .collect(Collectors.toSet())
         );
 
         if(isUpdate) {
@@ -107,9 +106,9 @@ public class ProjectService {
     // For know, find all.
     public Set<ProjectViewDto> searchProjects(String content, Set<String> tags) {
         Set<ProjectViewDto> projects = content.isEmpty() ?
-            projectRepository.getAll(Sort.by(Sort.Direction.DESC, "creationDate")):
-            projectRepository.searchProjects(content.toLowerCase(), Sort.by(Sort.Direction.DESC, "creationDate"))
-        ;
+                projectRepository.getAll(Sort.by(Sort.Direction.DESC, "creationDate")):
+                projectRepository.searchProjects(content.toLowerCase(), Sort.by(Sort.Direction.DESC, "creationDate"))
+                ;
 
         if(!tags.isEmpty()) {
             // if the project does not contain all tags, we removed it.
@@ -117,5 +116,9 @@ public class ProjectService {
         }
 
         return projects;
+    }
+
+    public Set<ProjectViewDto> getAllProjects(Client client) {
+        return projectRepository.findAllByClient(client.getId());
     }
 }

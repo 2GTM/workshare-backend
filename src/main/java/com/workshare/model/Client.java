@@ -33,6 +33,8 @@ public class Client extends WorkShareTable implements UserDetails {
 
     private String github;
 
+    private String linkedin;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of();

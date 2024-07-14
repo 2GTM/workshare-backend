@@ -1,8 +1,11 @@
 package com.workshare.controller;
 
 import com.workshare.dto.ClientDto;
+import com.workshare.dto.ProjectViewDto;
 import com.workshare.model.Client;
 import com.workshare.service.ClientService;
+import com.workshare.service.ProjectService;
+
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.codec.ClientCodecConfigurer.ClientDefaultCodecs;
@@ -12,14 +15,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.Set;
-import org.springframework.web.bind.annotation.RequestParam;
-
 
 @RestController
 @RequestMapping("/api/clients")
 @RequiredArgsConstructor
 public class ClientController {
     private final ClientService clientService;
+    private final ProjectService projectService;
 
     @GetMapping("/usernames")
     public Set<String> getAllUsernames() {
@@ -29,7 +31,11 @@ public class ClientController {
     @GetMapping("/{username}")
     public ClientDto getUserInfo(@PathVariable String username) {
         Client client = clientService.getClientByUsername(username);
-        int count = clientService.getProjectsNumber(username);
-        return client != null ? new ClientDto(client, count) : null;
+        if (client != null) {
+            Set<ProjectViewDto> projects = projectService.getAllProjects(client);
+            return new ClientDto(client, projects);
+        } else {
+            return null;
+        }
     }
 }

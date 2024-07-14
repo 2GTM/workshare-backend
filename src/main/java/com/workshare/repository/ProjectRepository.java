@@ -1,6 +1,7 @@
 package com.workshare.repository;
 
 import com.workshare.dto.ProjectViewDto;
+import com.workshare.model.Client;
 import com.workshare.model.Project;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,4 +22,7 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
 
     @Query("SELECT new com.workshare.dto.ProjectViewDto(p) FROM Project p")
     Set<ProjectViewDto> getAll(Sort sort);
+
+    @Query("SELECT new com.workshare.dto.ProjectViewDto(p) FROM Project p WHERE p.client.id = ?1")
+    Set<ProjectViewDto> findAllByClient(long clientId);
 }
