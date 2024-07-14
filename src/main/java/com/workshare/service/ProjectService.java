@@ -56,6 +56,7 @@ public class ProjectService {
                 .collect(Collectors.toSet());
     }
 
+
     public ProjectViewDto addRemoveMemberToProject(long projectId, String clientName, boolean removing) {
         Project project = this.getProjectById(projectId);
         Client client = clientService.getClientByUsername(clientName);
