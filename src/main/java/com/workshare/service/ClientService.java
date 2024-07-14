@@ -12,7 +12,6 @@ import java.util.Set;
 @Service
 @RequiredArgsConstructor
 public class ClientService {
-
     private final ClientRepository clientRepository;
 
     public Client getClientById(Long id) {
