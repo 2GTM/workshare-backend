@@ -21,6 +21,7 @@ public class SecurityConfiguration {
     private final String[] WHITE_LIST_URL = {
         "/api/auth/**",
         "/api/projects/**",
+        "/api/projects/{projectId}/addMember",
         "/api/clients/**"
     };
 
