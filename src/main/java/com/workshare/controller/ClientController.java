@@ -12,7 +12,6 @@ import java.util.Set;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
-@CrossOrigin("${ALLOWED_URL}")
 @RestController
 @RequestMapping("/api/clients")
 @RequiredArgsConstructor
