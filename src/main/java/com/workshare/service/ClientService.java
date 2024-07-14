@@ -15,6 +15,10 @@ public class ClientService {
 
     private final ClientRepository clientRepository;
 
+    public Client getClientById(Long id) {
+        return clientRepository.findById(id).orElse(null);
+    }
+
     public Client getClientByUsername(String username) {
         return clientRepository.findByUsername(username)
                 .orElseThrow(ClientNotFound::new);
