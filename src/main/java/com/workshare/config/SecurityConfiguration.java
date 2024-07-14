@@ -5,11 +5,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
@@ -17,26 +20,25 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfiguration {
     private final String[] WHITE_LIST_URL = {
         "/api/auth/**",
-        "/api/projects/search",
-        "/api/projects/trend",
+        "/api/projects/**",
         "/api/clients/**"
     };
 
     private final JwtAuthentiticationFilter jwtAuthentiticationFilter;
     private final AuthenticationProvider authenticationProvider;
+    private final CorsConfigurationSource corsConfigurationSource;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
+            .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(
-                authCustomizer -> authCustomizer
-                    .requestMatchers(WHITE_LIST_URL).permitAll()
-                    .requestMatchers(HttpMethod.GET, "/api/projects/{projectId}").permitAll()
-
+                authCustomizer -> authCustomizer.requestMatchers(WHITE_LIST_URL).permitAll()
             )
-            .authenticationProvider(authenticationProvider)
-            .addFilterBefore(jwtAuthentiticationFilter, UsernamePasswordAuthenticationFilter.class)
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .authenticationProvider(authenticationProvider)
+            .cors(c -> c.configurationSource(corsConfigurationSource))
+            .addFilterBefore(jwtAuthentiticationFilter, UsernamePasswordAuthenticationFilter.class)
             .build();
     }
 }

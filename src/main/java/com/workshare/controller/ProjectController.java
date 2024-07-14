@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.Set;
 
-@CrossOrigin("${ALLOWED_URL}")
 @RestController
 @RequestMapping("/api/projects")
 @RequiredArgsConstructor
