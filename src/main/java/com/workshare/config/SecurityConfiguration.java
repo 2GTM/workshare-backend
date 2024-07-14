@@ -7,6 +7,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -15,9 +16,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfiguration {
     private final String[] WHITE_LIST_URL = {
+        "/api/auth/**",
         "/api/projects/search",
         "/api/projects/trend",
-        "/api/auth"
+        "/api/clients/**"
     };
 
     private final JwtAuthentiticationFilter jwtAuthentiticationFilter;
@@ -30,9 +32,11 @@ public class SecurityConfiguration {
                 authCustomizer -> authCustomizer
                     .requestMatchers(WHITE_LIST_URL).permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/projects/{projectId}").permitAll()
+
             )
             .authenticationProvider(authenticationProvider)
             .addFilterBefore(jwtAuthentiticationFilter, UsernamePasswordAuthenticationFilter.class)
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .build();
     }
 }
