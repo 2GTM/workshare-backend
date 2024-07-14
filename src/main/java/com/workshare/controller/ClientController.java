@@ -28,6 +28,8 @@ public class ClientController {
 
     @GetMapping("/{username}")
     public ClientDto getUserInfo(@PathVariable String username) {
-        return new ClientDto(clientService.getClientByUsername(username), clientService.getProjectsNumber(username));
+        Client client = clientService.getClientByUsername(username);
+        int count = clientService.getProjectsNumber(username);
+        return client != null ? new ClientDto(client, count) : null;
     }
 }
