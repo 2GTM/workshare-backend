@@ -21,7 +21,6 @@ public class SecurityConfiguration {
     private final String[] WHITE_LIST_URL = {
         "/api/auth/**",
         "/api/projects/**",
-        "/api/projects/{projectId}/addMember",
         "/api/clients/**"
     };
 
@@ -34,7 +33,8 @@ public class SecurityConfiguration {
         return http
             .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(
-                authCustomizer -> authCustomizer.requestMatchers(WHITE_LIST_URL).permitAll()
+                authCustomizer -> authCustomizer
+                    .requestMatchers(WHITE_LIST_URL).permitAll()
             )
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authenticationProvider(authenticationProvider)
