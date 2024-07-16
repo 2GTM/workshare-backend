@@ -1,11 +1,14 @@
 package com.workshare.controller;
 
+import com.workshare.dto.CreateUpdateProjectDto;
 import com.workshare.dto.ProjectActionDto;
 import com.workshare.dto.ProjectViewDto;
+import com.workshare.model.Client;
 import com.workshare.model.Project;
 import com.workshare.service.ProjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import java.util.Set;
 
@@ -34,8 +37,13 @@ public class ProjectController {
     }
 
     @PostMapping
-    public ResponseEntity<ProjectViewDto> createProject(@RequestBody ProjectViewDto dto) {
+    public ResponseEntity<ProjectViewDto> createProject(@RequestBody CreateUpdateProjectDto dto) {
         return ResponseEntity.ok(projectService.createOrUpdateProject(dto, null));
+    }
+
+    @PatchMapping("/{projectId}")
+    public ResponseEntity<ProjectViewDto> updateProject(@RequestBody CreateUpdateProjectDto dto, @PathVariable long projectId) {
+        return ResponseEntity.ok(projectService.createOrUpdateProject(dto, projectId));
     }
 
     @PostMapping("/{projectId}/add-member")
@@ -52,10 +60,5 @@ public class ProjectController {
     @PostMapping("/{projectId}/vote")
     public ResponseEntity<ProjectViewDto> voteProject(@PathVariable long projectId, @RequestParam String clientName) {
         return ResponseEntity.ok(projectService.voteProject(projectId,clientName));
-    }
-
-    @PatchMapping("/{projectId}")
-    public ResponseEntity<ProjectViewDto> updateProject(@RequestBody ProjectViewDto dto, @PathVariable long projectId) {
-        return ResponseEntity.ok(projectService.createOrUpdateProject(dto, projectId));
     }
 }
