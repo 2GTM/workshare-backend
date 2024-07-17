@@ -1,5 +1,6 @@
 package com.workshare.auth;
 
+import io.jsonwebtoken.JwtException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +13,11 @@ public class AuthController {
 
     @PostMapping("/validate-token")
     public boolean validateToken(@RequestParam String token) {
-        return authService.validateToken(token);
+        try {
+            return authService.validateToken(token);
+        } catch (JwtException e) {
+            return false;
+        }
     }
     @PostMapping("/sign-up")
     public ResponseEntity<AuthResponse> signUp(

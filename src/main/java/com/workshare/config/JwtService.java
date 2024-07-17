@@ -11,12 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
-import java.security.Key;
-import java.time.Instant;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
 import java.util.function.Function;
 
 @Service
@@ -68,6 +63,7 @@ public class JwtService {
 
     public boolean isTokenValid(String token, UserDetails client) {
         String username = extractUsername(token);
-        return (client.getUsername().equals(username) && !isTokenExpired(token));
+        if(token == null || client == null) return false;
+        else return (client.getUsername().equals(username) && !isTokenExpired(token));
     }
 }

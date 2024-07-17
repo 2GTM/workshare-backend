@@ -13,6 +13,8 @@ import com.workshare.repository.ProjectRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -40,6 +42,22 @@ public class ProjectService {
 
     public ProjectViewDto getProjectViewWithId(long projectId) {
         return ProjectViewDto.from(this.getProjectById(projectId));
+    }
+
+    public ResponseEntity<ProjectViewDto> getProjectForEdit(long projectId) {
+        Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        try {
+            Project project = this.getProjectById(projectId);
+
+            if(project.getClient().getId() == client.getId()) {
+                return ResponseEntity.ok(ProjectViewDto.from(project));
+            }
+
+            else return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        } catch (ProjectNotFound e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     public Project getProjectById(long projectId) {

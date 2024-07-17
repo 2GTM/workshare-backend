@@ -37,6 +37,7 @@ public class SecurityConfiguration {
                 authCustomizer -> authCustomizer
                     .requestMatchers(WHITE_LIST_URL).permitAll()
                     .requestMatchers("/api/clients/exists/{username}").permitAll()
+                    .requestMatchers("/api/projects/{projectId}/edit").authenticated()
                     .requestMatchers(HttpMethod.POST, "/api/projects").authenticated()
             )
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

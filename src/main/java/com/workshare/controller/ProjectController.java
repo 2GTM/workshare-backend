@@ -3,12 +3,9 @@ package com.workshare.controller;
 import com.workshare.dto.CreateUpdateProjectDto;
 import com.workshare.dto.ProjectActionDto;
 import com.workshare.dto.ProjectViewDto;
-import com.workshare.model.Client;
-import com.workshare.model.Project;
 import com.workshare.service.ProjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import java.util.Set;
 
@@ -60,5 +57,10 @@ public class ProjectController {
     @PostMapping("/{projectId}/vote")
     public ResponseEntity<ProjectViewDto> voteProject(@PathVariable long projectId, @RequestParam String clientName) {
         return ResponseEntity.ok(projectService.voteProject(projectId,clientName));
+    }
+
+    @GetMapping("/{projectId}/edit")
+    public ResponseEntity<ProjectViewDto> editProject(@PathVariable long projectId) {
+        return projectService.getProjectForEdit(projectId);
     }
 }
