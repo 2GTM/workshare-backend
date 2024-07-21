@@ -1,7 +1,7 @@
 package com.workshare.service;
 
+import com.workshare.dto.CreateUpdateProjectDto;
 import com.workshare.dto.ProjectViewDto;
-import com.workshare.exceptions.type.ClientNotFound;
 import com.workshare.exceptions.type.ProjectNotFound;
 import com.workshare.model.Client;
 import com.workshare.model.Link;
@@ -13,8 +13,12 @@ import com.workshare.repository.ProjectRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
+
 import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -31,18 +35,34 @@ public class ProjectService {
 
     public Set<ProjectViewDto> getTrendingProjects() {
         return projectRepository.findTrendingProjects()
-                .stream()
-                .map(ProjectViewDto::from)
-                .collect(Collectors.toSet());
+            .stream()
+            .map(ProjectViewDto::from)
+            .collect(Collectors.toSet());
     }
 
     public ProjectViewDto getProjectViewWithId(long projectId) {
         return ProjectViewDto.from(this.getProjectById(projectId));
     }
 
+    public ResponseEntity<ProjectViewDto> getProjectForEdit(long projectId) {
+        Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        try {
+            Project project = this.getProjectById(projectId);
+
+            if(project.getClient().getId() == client.getId()) {
+                return ResponseEntity.ok(ProjectViewDto.from(project));
+            }
+
+            else return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        } catch (ProjectNotFound e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     public Project getProjectById(long projectId) {
         return projectRepository.findById(projectId)
-                .orElseThrow(ProjectNotFound::new);
+            .orElseThrow(ProjectNotFound::new);
     }
 
     public Set<String> getAllMembersUsernamesFromProjectId(long projectId) {
@@ -51,9 +71,9 @@ public class ProjectService {
 
     private Set<Client> getAllMembersFromUsernames(Set<String> usernames) {
         return usernames
-                .stream()
-                .map(clientService::getClientByUsername)
-                .collect(Collectors.toSet());
+            .stream()
+            .map(clientService::getClientByUsername)
+            .collect(Collectors.toSet());
     }
 
     public ProjectViewDto addRemoveMemberToProject(long projectId, String clientName, boolean removing) {
@@ -73,7 +93,10 @@ public class ProjectService {
         return ProjectViewDto.from(this.projectRepository.save(project));
     }
 
-    public ProjectViewDto createOrUpdateProject(@Valid ProjectViewDto dto, Long projectId) {
+    public ProjectViewDto createOrUpdateProject(@Valid CreateUpdateProjectDto dto, Long projectId) {
+        // Get the authenticated client.
+        Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
         boolean isUpdate = projectId != null;
         Project project = isUpdate ? projectRepository.findById(projectId).orElseThrow(ProjectNotFound::new) : new Project();
 
@@ -83,21 +106,21 @@ public class ProjectService {
         project.setTags(tagService.getTagsFromListOfStrings(dto.tagsContent()));
 
         project.setLinks(
-                dto.linksContent().stream()
-                        .map(e -> linkRepository.save(
-                                        Link.builder()
-                                                .content(e.content())
-                                                .visibility(e.visibility())
-                                                .build()
-                                )
-                        )
-                        .collect(Collectors.toSet())
+            dto.linksContent().stream()
+                .map(e -> linkRepository.save(
+                        Link.builder()
+                            .content(e.content())
+                            .visibility(e.visibility())
+                            .build()
+                    )
+                )
+                .collect(Collectors.toSet())
         );
 
-        if(isUpdate) {
+        if (isUpdate) {
             project.setLastModifiedDate(LocalDateTime.now());
         } else {
-            project.setClient(clientRepository.findByUsername(dto.publisherName()).orElseThrow(ClientNotFound::new));
+            project.setClient(client);
         }
 
         return ProjectViewDto.from(projectRepository.save(project));
@@ -106,11 +129,10 @@ public class ProjectService {
     // For know, find all.
     public Set<ProjectViewDto> searchProjects(String content, Set<String> tags) {
         Set<ProjectViewDto> projects = content.isEmpty() ?
-                projectRepository.getAll(Sort.by(Sort.Direction.DESC, "creationDate")):
-                projectRepository.searchProjects(content.toLowerCase(), Sort.by(Sort.Direction.DESC, "creationDate"))
-                ;
+            projectRepository.getAll(Sort.by(Sort.Direction.DESC, "creationDate")) :
+            projectRepository.searchProjects(content.toLowerCase(), Sort.by(Sort.Direction.DESC, "creationDate"));
 
-        if(!tags.isEmpty()) {
+        if (!tags.isEmpty()) {
             // if the project does not contain all tags, we removed it.
             projects.removeIf(project -> !project.tagsContent().containsAll(tags));
         }

@@ -20,4 +20,11 @@ public class GlobalExceptionHandler {
         System.out.println(e.getMessage());
         return ErrorCode.CLIENT_NOT_FOUND;
     }
+
+    @ExceptionHandler(io.jsonwebtoken.ExpiredJwtException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public String handleExpiredJwtException(io.jsonwebtoken.ExpiredJwtException e) {
+        System.out.println(e.getMessage());
+        return e.getMessage();
+    }
 }
