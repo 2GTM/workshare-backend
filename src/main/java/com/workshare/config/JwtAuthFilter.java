@@ -40,8 +40,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         // Extract the username from the token
         String username = jwtService.extractUsername(token);
 
-        System.out.println("BREAKPOINT 100");
-        System.out.println("GOOD USERNAME : "+username);
         if(username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             // Get the client by username
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);

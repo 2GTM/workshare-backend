@@ -27,7 +27,7 @@ public class ApplicationConfig {
         return (request) -> {
             CorsConfiguration configuration = new CorsConfiguration();
             configuration.setAllowedOrigins(List.of(allowedUrl));
-            configuration.setAllowedMethods(List.of("GET", "POST"));
+            configuration.setAllowedMethods(List.of("*"));
             configuration.setAllowedHeaders(List.of("*"));
             return configuration;
         };
