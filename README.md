@@ -1,6 +1,6 @@
 # Workshare
 
-Workshare is a website that let people share their project idea. We built Workshare during the Hack your portfolio hackathon by MLH.
+Workshare is a website that let people share their project idea. We built Workshare during the **Hack Your Portfolio hackathon** by **MLH**.
 
 ![Home](./src/main/resources/readme/home_preview.png)
 
@@ -10,9 +10,16 @@ Workshare is a website that let people share their project idea. We built Worksh
 - [@AchrafGroiez](https://github.com/AchrafGroiez)
 - [@QuocDungTran380](https://github.com/QuocDungTran380)
 
+## Important links
+
+- [Devpost Submition](https://devpost.com/software/workshare-eyut9d)
+- [Frontend](https://github.com/2GTM/workshare-frontend)
+
 ## Features
 
-- TO DO
+- Search projects by content and tags.
+- Create project idea.
+- Login and sign up.
 
 ## Technologies
 
