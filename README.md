@@ -1,6 +1,6 @@
 # Workshare
 
-Workshare is a website that let people share their project idea. We built Workshare during the **Hack Your Portfolio hackathon** by **MLH**.
+Workshare is a website where people can share their project ideas. We built Workshare during the **Hack Your Portfolio Hackathon** by **MLH**.
 
 ![Home](./src/main/resources/readme/home_preview.png)
 
@@ -12,14 +12,14 @@ Workshare is a website that let people share their project idea. We built Worksh
 
 ## Important links
 
-- [Devpost Submition](https://devpost.com/software/workshare-eyut9d)
+- [Devpost Submission](https://devpost.com/software/workshare-eyut9d)
 - [Frontend](https://github.com/2GTM/workshare-frontend)
 
 ## Features
 
-- Search projects by content and tags.
-- Create project idea.
-- Login and sign up.
+- Find projects by content and tags.
+- Create a project idea.
+- Login and register.
 
 ## Technologies
 
@@ -61,7 +61,7 @@ cd workshare-frontend/
 npm install
 ```
 
-Create a file named `config.json` in the root folder with this content :
+Create a file named `config.json` in the root directory with the following content :
 
 ```json
 {
@@ -83,10 +83,10 @@ cd workshare-backend
 mvn install
 ```
 
-Create a file named `env.properties` in the root folder with this content :
+Create a file named `env.properties` in the root directory with the following content :
 
 ```properties
-# Server Port
+# Server port
 PORT=
 
 # Database information
@@ -94,7 +94,7 @@ URL=jdbc:mariadb://localhost:3306/workshare
 DB_USERNAME=
 DB_PASSWORD=
 
-# URL of the frontend
+# Frontend URL
 ALLOWED_URL=
 
 # Secret key for JWT.
