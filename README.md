@@ -47,18 +47,21 @@ Workshare is a website that let people share their project idea. We built Worksh
 <br />
 
 Setup :
-```
+
+```sh
 git clone https://github.com/2GTM/workshare-frontend
 cd workshare-frontend/
-bun install
+npm install
 ```
 
 Create a file named `config.json` in the root folder with this content :
+
 ```json
 {
   "backendUrl" : "$BACKEND_URL"
 }
 ```
+
 </details>
 
 <!-- Backend section -->
@@ -66,13 +69,15 @@ Create a file named `config.json` in the root folder with this content :
 <br />
 
 Setup :
-```
+
+```sh
 git clone https://github.com/2GTM/workshare-backend
 cd workshare-backend
 mvn install
 ```
 
 Create a file named `env.properties` in the root folder with this content :
+
 ```properties
 # Server Port
 PORT=
@@ -95,7 +100,7 @@ SECRET_JWT_KEY=
 
 ```sh
 # Frontend
-bun run dev
+npm run dev
 
 # Backend
 mvn spring-boot:run
@@ -104,22 +109,29 @@ mvn spring-boot:run
 ## Preview
 
 ### Home
+
 ![Home](./src/main/resources/readme/home.png)
 
 ### Login
+
 ![Login](./src/main/resources/readme/login.png)
 
 ### Search project
+
 ![Search Project](./src/main/resources/readme/find_a_project.png)
 
 ### Create project
+
 ![Create Project](./src/main/resources/readme/create_project.png)
 
 ### Project view
+
 ![Project View](./src/main/resources/readme/project_[id].png)
 
 ### Trending
+
 ![Trending](./src/main/resources/readme/trending.png)
 
 ### User profile
+
 ![User Profile](./src/main/resources/readme/user_profil.png)
