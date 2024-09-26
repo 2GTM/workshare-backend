@@ -2,7 +2,7 @@
 
 Workshare is a website where people can share their project ideas. We built Workshare during the **Hack Your Portfolio Hackathon** by **MLH**.
 
-![Home](./src/main/resources/readme/home_preview.png)
+![Home](https://raw.githubusercontent.com/2GTM/workshare-backend/refs/heads/dev/src/main/resources/readme/home_preview.png)
 
 ## Authors
 
@@ -117,28 +117,28 @@ mvn spring-boot:run
 
 ### Home
 
-![Home](./src/main/resources/readme/home.png)
+![Home](https://raw.githubusercontent.com/2GTM/workshare-backend/refs/heads/dev/src/main/resources/readme/home.png)
 
 ### Login
 
-![Login](./src/main/resources/readme/login.png)
+![Login](https://raw.githubusercontent.com/2GTM/workshare-backend/refs/heads/dev/src/main/resources/readme/login.png)
 
 ### Search project
 
-![Search Project](./src/main/resources/readme/find_a_project.png)
+![Search Project](https://raw.githubusercontent.com/2GTM/workshare-backend/refs/heads/dev/src/main/resources/readme/find_a_project.png)
 
 ### Create project
 
-![Create Project](./src/main/resources/readme/create_project.png)
+![Create Project](https://raw.githubusercontent.com/2GTM/workshare-backend/refs/heads/dev/src/main/resources/readme/create_project.png)
 
 ### Project view
 
-![Project View](./src/main/resources/readme/project_[id].png)
+![Project View](https://raw.githubusercontent.com/2GTM/workshare-backend/refs/heads/dev/src/main/resources/readme/project_%5Bid%5D.png)
 
 ### Trending
 
-![Trending](./src/main/resources/readme/trending.png)
+![Trending](https://raw.githubusercontent.com/2GTM/workshare-backend/refs/heads/dev/src/main/resources/readme/trending.png)
 
 ### User profile
 
-![User Profile](./src/main/resources/readme/user_profil.png)
+![User Profile](https://raw.githubusercontent.com/2GTM/workshare-backend/refs/heads/dev/src/main/resources/readme/user_profil.png)
